@@ -1,4 +1,5 @@
 import React from 'react';
+import useWindowSize from './useWindowSize'; // Asegúrate de importar el hook
 
 const Square = ({
   number,
@@ -7,10 +8,14 @@ const Square = ({
   onClick,
   onMouseEnter,
   onMouseLeave,
-  size = 40,
   color = '#000',
   hoverColor = '#000'
 }) => {
+  const { width } = useWindowSize();
+  
+  // Define el tamaño basado en el ancho de la ventana
+  const size = width < 768 ? 30 : 50; // Cambia 768 por el breakpoint que desees
+
   return (
     <div 
       onClick={onClick}
@@ -25,8 +30,12 @@ const Square = ({
         }
       }}
       style={{
-        width: '50px',
-          height: '50px', background: '#6633CC', borderRadius: '8px', marginLeft: '2px', border: '3px solid #FE2A9F'
+        width: `${size}px`,
+        height: `${size}px`,
+        background: '#6633CC',
+        borderRadius: '8px',
+        marginLeft: '2px',
+        border: '3px solid #FE2A9F'
       }}
     >
       <div
@@ -41,19 +50,19 @@ const Square = ({
         }`}
         style={{
           backgroundColor: filled ? (hovered ? hoverColor : color) : '#003366',
-          width: '50px',
-          height: '50px',
-          fontSize: `24px`,
+          width: `${size}px`,
+          height: `${size}px`,
+          fontSize: `${size * 0.5}px`, // Ajusta el tamaño de la fuente en relación al tamaño del cuadrado
           color: '#fff',
           cursor: 'pointer',
-          
-          fontWeight: '600', borderRadius: '6px', placeContent: 'center', justifyContent: 'center', alignItems: 'center'
+          fontWeight: '600',
+          borderRadius: '6px',
+          placeContent: 'center',
+          justifyContent: 'center',
+          alignItems: 'center'
         }}
       >
         <span style={{display: 'flex', flexDirection: 'row', alignItems: 'center', placeContent: 'center', justifyContent: 'center' }}>{number}</span>
-
-        
-
       </div>
     </div>
   );

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Star as StarIcon } from 'lucide-react';
+import useWindowSize from './useWindowSize'; // Asegúrate de importar el hook
 
 const Star = ({
   filled,
@@ -11,6 +12,11 @@ const Star = ({
   color = '#FFD700', // Gold color
   hoverColor = '#FFC000',
 }) => {
+  const { width } = useWindowSize();
+  
+  // Define el tamaño basado en el ancho de la ventana
+  const size = width < 768 ? 48 : 72; // Cambia 768 por el breakpoint que desees
+
   return (
     <div 
       className="relative cursor-pointer"
@@ -27,7 +33,7 @@ const Star = ({
       }}
     >
       <StarIcon
-        size="72"
+        size={size}
         className={`transition-all duration-300 ${
           filled 
             ? 'fill-current text-opacity-100' 
@@ -48,7 +54,7 @@ const Star = ({
       {halfFilled && !filled && (
         <div className="absolute inset-0 overflow-hidden w-1/2">
           <StarIcon
-            size="72"
+            size={size}
             className="fill-current"
             fill={hovered ? hoverColor : color}
             stroke={hovered ? hoverColor : color}
